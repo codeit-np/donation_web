@@ -21,6 +21,12 @@ class BookController extends Controller
         return BookResource::collection($books);
     }
 
+    public function search(Request $request)
+    {
+        $books = Book::where('name','like','%'.$request->name.'%')->get();
+        return BookResource::collection($books);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BookRequest;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FeedbackController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +30,9 @@ Route::post('login',[AuthController::class,'login']);
 Route::group(['middleware' => 'auth:sanctum'],function(){
     Route::post('logout',[AuthController::class,'logout']);
     Route::apiResource('books',BookController::class);
+    Route::post('search',[BookController::class,'search']);
     Route::apiResource('bookrequest',BookRequest::class);
     Route::apiResource('categories',CategoryController::class);
     Route::apiResource('feedback',FeedbackController::class);
+    Route::post('updateprofile/{id}',[AuthController::class,'update']);
 });

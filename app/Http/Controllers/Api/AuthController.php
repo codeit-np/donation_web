@@ -88,10 +88,19 @@ class AuthController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
-        $user = User::find($request->user()->id);
+        // return response()->json(['message' => 'sajal']);
+        $user = User::find($id);
         $user->name = $request->name;
+        $user->address = $request->address;
+        $user->mobile = $request->mobile;
+        if($request->hasFile('photo')){
+            $data = $request->photo;
+            $newName = time() . $data->getClientOriginalName();
+            $data->move('photo',$newName);
+            $user->photo = 'photo/' . $newName;
+         }
         $user->update();
         return response()->json([
             'message' => 'success'

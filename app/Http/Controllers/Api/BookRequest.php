@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookResource;
 use App\Models\BooRequest;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,8 @@ class BookRequest extends Controller
      */
     public function index()
     {
-        $bookrequest = BooRequest::all();
-        return response()->json($bookrequest);
+        $bookrequest = BooRequest::orderBy('id','desc')->limit(5)->get();
+        return BookResource::collection($bookrequest);
     }
 
     /**
